@@ -1,5 +1,4 @@
 *.tfstate
 *.tfstate.*
+!terraform/bootstrap/state/*.tfstate
 .terraform/
-
-
