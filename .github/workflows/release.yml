@@ -1,0 +1,30 @@
+name: Release Base Image
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # Deploy to staging automatically for testing
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.example.com
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.8"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${AWS_ROLE_ARN}
+          role-session-name: MySessionName
+      - name: Get Output
+        run: |
+          # Deploy using your preferred method
+          cd terraform/bootstrap/cloud
+          curl -o output.xz  $(terraform output -raw disk_image_url)
