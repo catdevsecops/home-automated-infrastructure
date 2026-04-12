@@ -24,10 +24,11 @@ jobs:
       - name: Get Output
         run: |
           terraform init
+          echo "$(terraform output -raw disk_image_url)"
           curl -o base-image.arm.${{ github.event.release.tag_name }}.xz  $(terraform output -raw disk_image_url)
         working-directory: ./terraform/bootstrap/cluster
       - name: Upload Asset
         uses: softprops/action-gh-release@v3
         with:
-          working-directory: ./terraform/bootstrap/cluster
+          working_directory: ./terraform/bootstrap/cluster
           files: base-image.arm.${{ github.event.release.tag_name }}.xz
