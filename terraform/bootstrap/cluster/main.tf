@@ -33,8 +33,8 @@ resource "talos_image_factory_schematic" "this" {
   schematic = yamlencode(
     {
       overlay = {
-        image = one(data.talos_image_factory_overlays_versions.this.overlays_info.*.image)
-        name  = one(data.talos_image_factory_overlays_versions.this.overlays_info.*.name)
+        image = data.talos_image_factory_overlays_versions.this.overlays_info[0].image
+        name  = data.talos_image_factory_overlays_versions.this.overlays_info[0].name
       }
 
       customization = {
@@ -47,7 +47,7 @@ resource "talos_image_factory_schematic" "this" {
 }
 
 
-output "schematic_id" {
-  value = talos_image_factory_schematic.this.id
+output "disk_image_url" {
+  value = data.talos_image_factory_urls.this.urls.disk_image
 }
 
