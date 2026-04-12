@@ -10,10 +10,6 @@ jobs:
       id-token: write
       contents: read
     runs-on: ubuntu-latest
-    environment:
-      name: staging
-      url: https://staging.example.com
-
     steps:
       - uses: actions/checkout@v6
       - uses: hashicorp/setup-terraform@v4
