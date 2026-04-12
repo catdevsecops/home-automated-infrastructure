@@ -23,9 +23,8 @@ jobs:
           role-session-name: MySessionName
       - name: Get Output
         run: |
-          # Deploy using your preferred method
-          cd terraform/bootstrap/cloud
           curl -o base-image.arm.${{ github.event.release.tag_name }}.xz  $(terraform output -raw disk_image_url)
+        working-directory: ./terraform/bootstrap/cloud
       - name: Upload Asset
         uses: softprops/action-gh-release@v3
         with:
