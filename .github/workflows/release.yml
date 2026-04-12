@@ -1,9 +1,9 @@
 name: Release Base Image
 
 on:
-  release:
-    types: [published]
-
+  push:
+    tags:
+      - "v*.*.*"
 jobs:
   generate_release_artifacts:
     permissions:
@@ -29,4 +29,5 @@ jobs:
       - name: Upload Asset
         uses: softprops/action-gh-release@v3
         with:
+          working-directory: ./terraform/bootstrap/cluster
           files: base-image.arm.${{ github.event.release.tag_name }}.xz
