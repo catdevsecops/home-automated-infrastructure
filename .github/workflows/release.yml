@@ -5,8 +5,10 @@ on:
     types: [published]
 
 jobs:
-  # Deploy to staging automatically for testing
-  deploy-staging:
+  generate_release_artifacts:
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ubuntu-latest
     environment:
       name: staging
@@ -27,4 +29,8 @@ jobs:
         run: |
           # Deploy using your preferred method
           cd terraform/bootstrap/cloud
-          curl -o output.xz  $(terraform output -raw disk_image_url)
+          curl -o base-image.arm.${{ github.event.release.tag_name }}.xz  $(terraform output -raw disk_image_url)
+      - name: Upload Asset
+        uses: softprops/action-gh-release@v3
+        with:
+          files: base-image.arm.${{ github.event.release.tag_name }}.xz
