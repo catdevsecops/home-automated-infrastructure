@@ -19,7 +19,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-region: us-east-2
-          role-to-assume: ${AWS_ROLE_ARN}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: MySessionName
       - name: Get Output
         run: |
