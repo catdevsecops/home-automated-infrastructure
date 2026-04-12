@@ -1,0 +1,53 @@
+access_control:
+  enabled: true
+  apply_require_all_dirspace_access: true
+  plan_require_all_dirspace_access: false
+  terrateam_config_update: ["*"]
+  unlock: ["*"]
+  policies:
+    - tag_query: ""
+      apply: ["*"]
+      apply_autoapprove: []
+      apply_force: []
+      apply_with_superapproval: []
+      plan: ["*"]
+      superapproval: []
+apply_requirements:
+  checks:
+    approved:
+      enabled: false
+      count: 1
+    merge_conflicts:
+      enabled: true
+    status_checks:
+      enabled: true
+      ignore_matching: []
+  create_pending_apply_check: true
+automerge:
+  enabled: true
+  delete_branch: true
+checkout_strategy: merge
+cost_estimation:
+  enabled: false
+  provider: infracost
+  currency: BRL
+default_tf_version: 1.14.8
+dirs:
+  terraform:
+    tags: [aws]
+    when_modified:
+      file_patterns: ["${DIR}/*.tf", "${DIR}/*.tfvars"]
+enabled: true
+parallel_runs: 3
+version: "1"
+when_modified:
+  file_patterns: ["**/*.tf", "**/*.tfvars"]
+  autoplan: true
+  autoplan_draft_pr: true
+  autoapply: false
+hooks:
+  all:
+    pre:
+      - type: oidc
+        provider: aws
+        role_arn: "${AWS_ROLE_ARN}"

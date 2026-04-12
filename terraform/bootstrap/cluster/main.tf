@@ -26,6 +26,9 @@ data "talos_image_factory_overlays_versions" "this" {
   }
 }
 
+
+
+
 resource "talos_image_factory_schematic" "this" {
   schematic = yamlencode(
     {

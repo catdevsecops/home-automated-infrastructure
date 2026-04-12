@@ -6,15 +6,13 @@ terraform {
     }
   }
   required_version = ">= 1.14"
-}
 
-terraform {
   backend "s3" {
-    bucket         = "catdevsecops-terraform-state"
-    key            = "bootstrap/cluster.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "terraform-state-locks"
-    encrypt        = true
+    bucket       = "catdevsecops-terraform-state"
+    key          = "bootstrap/cluster.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
   }
 }
 
