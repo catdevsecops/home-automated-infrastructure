@@ -31,4 +31,4 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           working_directory: ./terraform/bootstrap/cluster
-          files: base-image.arm.${{ github.event.release.tag_name }}.xz
+          files: metal-arm64.raw.xz
