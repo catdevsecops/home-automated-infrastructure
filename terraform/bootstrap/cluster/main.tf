@@ -3,9 +3,7 @@ data "talos_image_factory_extensions_versions" "this" {
   talos_version = "v1.12.6"
   filters = {
     names = [
-      "cloudflared",
       "ecr-credential-provider",
-      "zfs"
     ]
   }
 }
@@ -47,7 +45,4 @@ resource "talos_image_factory_schematic" "this" {
 }
 
 
-output "disk_image_url" {
-  value = data.talos_image_factory_urls.this.urls.disk_image
-}
 
