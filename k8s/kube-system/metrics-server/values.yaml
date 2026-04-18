@@ -5,3 +5,5 @@ metrics-server:
       effect: "NoSchedule"
   nodeSelector:
     "node-role.kubernetes.io/control-plane": ""
+  args:
+    - --kubelet-insecure-tls
