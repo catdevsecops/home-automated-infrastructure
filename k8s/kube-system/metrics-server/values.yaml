@@ -4,4 +4,4 @@ metrics-server:
     operator: "Exists"
     effect: "NoSchedule"
   nodeSelector:
-    "node-role.kubernetes.io/control-plane" = ""
+    "node-role.kubernetes.io/control-plane": ""
