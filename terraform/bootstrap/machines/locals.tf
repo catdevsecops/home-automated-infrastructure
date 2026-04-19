@@ -9,12 +9,39 @@ locals {
     auto       = "off"
     })
   }
+  machinename_workers_kubelet_patch = { for cp, ip in var.worker_nodes : cp =>
+    yamlencode({
+      machine = {
+        kubelet = {
+          extraArgs = {
+            rotate-server-certificates = true
+            address : "0.0.0.0"
+            node-ip : ip
+          }
+        }
+      }
+    })
+  }
   machinename_controlplane_patch = { for cp, ip in var.controlplane_nodes : cp =>
     yamlencode({
       apiVersion = "v1alpha1"
       kind       = "HostnameConfig"
       hostname   = cp
       auto       = "off"
+    })
+  }
+
+  machinename_controlplane_kubelet_patch = { for cp, ip in var.controlplane_nodes : cp =>
+    yamlencode({
+      machine = {
+        kubelet = {
+          extraArgs = {
+            rotate-server-certificates = true
+            address : "0.0.0.0"
+            node-ip : ip
+          }
+        }
+      }
     })
   }
   general_patch = yamlencode({
