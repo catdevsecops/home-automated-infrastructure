@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "aws_ssm_credentials" {
 
 resource "kubernetes_manifest" "aws_ssm_secret_store" {
   manifest = {
-    apiVersion = "external-secrets.io/v1beta1"
+    apiVersion = "external-secrets.io/v1"
     kind       = "SecretStore"
     metadata = {
       name      = "aws-ssm-store"
