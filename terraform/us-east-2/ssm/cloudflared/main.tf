@@ -35,8 +35,24 @@ resource "kubernetes_manifest" "cloudflare_external_secret" {
       target = {
         name           = "cloudflare-tunnel-secret"
         creationPolicy = "Owner"
+        template = {
+          data = {
+            "credentials.json" = jsonencode({
+              AccountTag   = "{{ .AccountTag }}"
+              TunnelID     = "{{ .TunnelID }}"
+              TunnelSecret = "{{ .TunnelSecret }}"
+            })
+          }
+        }
       }
       data = [
+        {
+          secretKey = "AccountTag"
+          remoteRef = {
+            key      = "/k8s/cloudflared"
+            property = "AccountTag"
+          }
+        },
         {
           secretKey = "TunnelID"
           remoteRef = {
