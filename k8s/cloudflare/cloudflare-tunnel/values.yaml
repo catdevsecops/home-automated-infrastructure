@@ -1,6 +1,5 @@
 cloudflare-tunnel:
   cloudflare:
-    account: e05d0d280d6d4bc63f73d1a72a0c5987
     tunnelName: skynet.intranet
     secretName: cloudflare-tunnel-secret
     enableWarp: false
