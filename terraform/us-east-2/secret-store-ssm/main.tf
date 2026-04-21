@@ -12,19 +12,17 @@ resource "kubernetes_manifest" "aws_ssm_credentials" {
 
     type = "Opaque"
     data = {
-      access_key = data.terraform_remote_state.operator.outputs.access_ssm_operator_id
-      secret_key = data.terraform_remote_state.operator.outputs.access_ssm_operator_key
+      access_key = base64encode(trimspace(data.terraform_remote_state.operator.outputs.access_ssm_operator_id))
+      secret_key = base64encode(trimspace(data.terraform_remote_state.operator.outputs.access_ssm_operator_key))
     }
   }
 }
-
 resource "kubernetes_manifest" "aws_ssm_secret_store" {
   manifest = {
     apiVersion = "external-secrets.io/v1"
-    kind       = "SecretStore"
+    kind       = "ClusterSecretStore"
     metadata = {
-      name      = "aws-ssm-store"
-      namespace = "external-secrets" # Onde o operador está instalado
+      name = "aws-ssm-store"
     }
     spec = {
       provider = {
