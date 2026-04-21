@@ -1,9 +1,10 @@
 cert-manager:
-  tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
-  nodeSelector:
-    "node-role.kubernetes.io/control-plane": ""
+  global:
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+    nodeSelector:
+      "node-role.kubernetes.io/control-plane": ""
   crds:
-    enable: true
+    enabled: true
