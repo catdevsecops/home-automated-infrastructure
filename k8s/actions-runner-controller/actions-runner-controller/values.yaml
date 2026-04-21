@@ -1,0 +1,22 @@
+actions-runner-controller:
+  ## URL do repositório ou organização
+  githubConfigUrl: "https://github.com/catdevsecops"
+
+  ## Nome da Secret gerada pelo seu ExternalSecret
+  githubConfigSecret: "github-app-secret"
+
+  ## Configuração do Runner
+  minRunners: 0
+  maxRunners: 1
+
+  ## Se você for usar Docker dentro dos runners (build de imagens)
+  containerMode:
+    type: "dind"
+
+  ## Configuração do Controller
+  controllerServiceAccount:
+    name: "arc-operator-gha-runner-scale-set-controller"
+    namespace: "actions-runner-controller"
+
+  ## Nome do Runner Group no GitHub (opcional)
+  runnerScaleSetName: "k8s-runner-set"
