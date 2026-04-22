@@ -1,4 +1,4 @@
-actions-runner-controller:
+arc-runner-scale-set:
   ## URL do repositório ou organização
   githubConfigUrl: "https://github.com/catdevsecops"
 
@@ -15,8 +15,8 @@ actions-runner-controller:
 
   ## Configuração do Controller
   controllerServiceAccount:
-    name: "arc-operator-gha-runner-scale-set-controller"
-    namespace: "actions-runner-controller"
+    name: arc-systems-arc-operator-gha-rs-controller
+    namespace: arc-systems
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
