@@ -1,4 +1,4 @@
-arc-runner-set-wrapper:
+gha-runner-scale-set:
   ## URL do repositório ou organização
   githubConfigUrl: "https://github.com/catdevsecops"
 
