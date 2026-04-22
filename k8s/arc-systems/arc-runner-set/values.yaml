@@ -6,8 +6,8 @@ gha-runner-scale-set:
   githubConfigSecret: "github-app-secret"
 
   ## Configuração do Runner
-  minRunners: 0
-  maxRunners: 1
+  minRunners: 1
+  maxRunners: 2
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
   containerMode:
