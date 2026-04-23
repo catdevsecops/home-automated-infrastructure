@@ -10,8 +10,8 @@ gha-runner-scale-set:
   maxRunners: 2
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
-  containerMode:
-    type: "dind"
+  # containerMode:
+  #   type: "dind"
 
   ## Configuração do Controller
   controllerServiceAccount:
