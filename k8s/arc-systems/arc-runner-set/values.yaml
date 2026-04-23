@@ -20,4 +20,3 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
-  runnerGroup: "Default"
