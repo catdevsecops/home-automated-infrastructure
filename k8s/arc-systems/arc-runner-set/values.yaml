@@ -20,3 +20,16 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
+  template:
+    metadata:
+      labels:
+        # Estas labels serão injetadas em CADA pod de runner criado
+        minha-label-customizada: "true"
+        equipe: "devops"
+        ambiente: "producao"
+        projeto: "ci-cd-automation"
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
