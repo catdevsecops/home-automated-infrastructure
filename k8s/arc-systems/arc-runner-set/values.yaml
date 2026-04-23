@@ -1,6 +1,6 @@
 gha-runner-scale-set:
   ## URL do repositório ou organização
-  githubConfigUrl: "https://github.com/catdevsecops"
+  githubConfigUrl: "https://github.com/catdevsecops/home-automated-infrastructure"
 
   ## Nome da Secret gerada pelo seu ExternalSecret
   githubConfigSecret: "github-app-secret"
@@ -10,8 +10,8 @@ gha-runner-scale-set:
   maxRunners: 2
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
-  containerMode:
-    type: "dind"
+  # containerMode:
+  #   type: "dind"
 
   ## Configuração do Controller
   controllerServiceAccount:
@@ -20,3 +20,4 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
+  runnerGroup: "Default"
