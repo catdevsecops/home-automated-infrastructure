@@ -1,0 +1,31 @@
+gha-runner-scale-set:
+  ## URL do repositório ou organização
+  githubConfigUrl: "https://github.com/catdevsecops"
+
+  ## Nome da Secret gerada pelo seu ExternalSecret
+  githubConfigSecret: "github-app-secret"
+
+  ## Configuração do Runner
+  minRunners: 1
+  maxRunners: 2
+
+  ## Se você for usar Docker dentro dos runners (build de imagens)
+  # containerMode:
+  #   type: "dind"
+
+  ## Configuração do Controller
+  controllerServiceAccount:
+    name: arc-systems-arc-operator-gha-rs-controller
+    namespace: arc-systems
+
+  ## Nome do Runner Group no GitHub (opcional)
+  runnerScaleSetName: "k8s-runner-set"
+  template:
+    metadata:
+      labels:
+        type: "self-hosted"
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
