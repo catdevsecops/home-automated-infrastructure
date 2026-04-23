@@ -7,7 +7,7 @@ gha-runner-scale-set:
 
   ## Configuração do Runner
   minRunners: 1
-  maxRunners: 2
+  maxRunners: 1
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
   # containerMode:
@@ -20,12 +20,12 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
-  template:
-    metadata:
-      labels:
-        type: "self-hosted"
-    spec:
-      containers:
-        - name: runner
-          image: ghcr.io/actions/actions-runner:latest
-          command: ["/home/runner/run.sh"]
+  # template:
+  #   metadata:
+  #     labels:
+  #       type: "self-hosted"
+  #   spec:
+  #     containers:
+  #       - name: runner
+  #         image: ghcr.io/actions/actions-runner:latest
+  #         command: ["/home/runner/run.sh"]
