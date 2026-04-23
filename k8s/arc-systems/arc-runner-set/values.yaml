@@ -1,6 +1,6 @@
 gha-runner-scale-set:
   ## URL do repositório ou organização
-  githubConfigUrl: "https://github.com/catdevsecops/home-automated-infrastructure"
+  githubConfigUrl: "https://github.com/catdevsecops"
 
   ## Nome da Secret gerada pelo seu ExternalSecret
   githubConfigSecret: "github-app-secret"
