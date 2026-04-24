@@ -51,6 +51,6 @@ hooks:
       - type: oidc
         provider: aws
         role_arn: "${AWS_ROLE_ARN}"
-workflows:
-  - tag_query: ""
-    runs_on: k8s-runner-set
+# workflows:
+#   - tag_query: ""
+#     runs_on: k8s-runner-set
