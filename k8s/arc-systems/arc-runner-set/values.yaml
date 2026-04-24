@@ -11,7 +11,7 @@ gha-runner-scale-set:
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
   containerMode:
-    type: "dind"
+    type: "kubernetes"
 
   ## Configuração do Controller
   controllerServiceAccount:
@@ -20,3 +20,12 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
+
+  # Garante que o pod do runner use uma ServiceAccount específica
+  template:
+    spec:
+      serviceAccountName: "arc-runner-admin-sa"
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
