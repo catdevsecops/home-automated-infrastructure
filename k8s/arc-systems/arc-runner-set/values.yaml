@@ -28,12 +28,12 @@ gha-runner-scale-set:
     - "self-hosted"
 
   # Garante que o pod do runner use uma ServiceAccount específica
-  template:
-    spec:
-      serviceAccountName: "arc-runner-admin-sa"
-      containers:
-        - name: runner
-          image: ghcr.io/actions/actions-runner:latest
-          command: ["/home/runner/run.sh"]
-          securityContext:
-            privileged: true
+  # template:
+  #   spec:
+  #     serviceAccountName: "arc-runner-admin-sa"
+  #     containers:
+  #       - name: runner
+  #         image: ghcr.io/actions/actions-runner:latest
+  #         command: ["/home/runner/run.sh"]
+  #         securityContext:
+  #           privileged: true
