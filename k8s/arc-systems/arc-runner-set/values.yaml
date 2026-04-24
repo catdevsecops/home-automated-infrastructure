@@ -11,14 +11,7 @@ gha-runner-scale-set:
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
   containerMode:
-    # No Bare Metal, usamos emptyDir para não depender de StorageClasses
-    type: "kubernetes"
-    kubernetesModeWorkVolumeClaimTemplate:
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: "1Gi"
+    type: "dind"
 
   ## Configuração do Controller
   controllerServiceAccount:
@@ -36,6 +29,3 @@ gha-runner-scale-set:
         - name: runner
           image: ghcr.io/actions/actions-runner:latest
           command: ["/home/runner/run.sh"]
-          securityContext:
-            runAsUser: 1001
-            fsGroup: 1001
