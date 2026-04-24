@@ -29,3 +29,5 @@ gha-runner-scale-set:
         - name: runner
           image: ghcr.io/actions/actions-runner:latest
           command: ["/home/runner/run.sh"]
+          securityContext:
+            privileged: true
