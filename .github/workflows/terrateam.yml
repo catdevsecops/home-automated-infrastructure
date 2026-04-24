@@ -20,16 +20,12 @@ on:
       environment:
         description: "Environment in which to run the action"
         type: environment
-      runs_on:
-        description: "runs-on configuration"
-        type: string
-        default: "k8s-runner-set"
 jobs:
   terrateam:
     permissions:
       id-token: write
       contents: read
-    runs-on: ${{ fromJSON(github.event.inputs.runs_on) }}
+    runs-on: k8s-runner-set
     timeout-minutes: 1440
     name: Terrateam Action
     environment: "${{ github.event.inputs.environment }}"
