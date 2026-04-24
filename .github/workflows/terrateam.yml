@@ -29,7 +29,10 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    runs-on: ${{ fromJSON(github.event.inputs.runs_on) }}
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
     timeout-minutes: 1440
     name: Terrateam Action
     environment: "${{ github.event.inputs.environment }}"
