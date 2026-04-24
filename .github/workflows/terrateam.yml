@@ -23,7 +23,7 @@ on:
       runs_on:
         description: "runs-on configuration"
         type: string
-        default: '"k8s-runner-set"'
+        default: "k8s-runner-set"
 jobs:
   terrateam:
     permissions:
