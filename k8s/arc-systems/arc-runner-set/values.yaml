@@ -21,6 +21,12 @@ gha-runner-scale-set:
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
 
+  # Adicionando labels que o GitHub entende para ARM
+  labels:
+    - "linux"
+    - "arm64"
+    - "self-hosted"
+
   # Garante que o pod do runner use uma ServiceAccount específica
   template:
     spec:
