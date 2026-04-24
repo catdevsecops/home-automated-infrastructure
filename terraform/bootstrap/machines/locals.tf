@@ -34,6 +34,17 @@ locals {
   machinename_controlplane_kubelet_patch = { for cp, ip in var.controlplane_nodes : cp =>
     yamlencode({
       machine = {
+        certSANs = [
+          "10.10.15.9",
+          "10.10.15.10",
+          "10.10.15.11",
+          "athos.lan.skynet",
+          "porthos.lan.skynet",
+          "aramis.lan.skynet",
+          "127.0.0.1",
+          "skynet.cavaleiro.in",
+          "skynet.internal.cavaleiro.in"
+        ]
         kubelet = {
           extraArgs = {
             rotate-server-certificates = true
