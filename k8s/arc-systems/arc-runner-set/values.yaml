@@ -20,12 +20,12 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
-  # template:
-  #   metadata:
-  #     labels:
-  #       type: "self-hosted"
-  #   spec:
-  #     containers:
-  #       - name: runner
-  #         image: ghcr.io/actions/actions-runner:latest
-  #         command: ["/home/runner/run.sh"]
+  template:
+    metadata:
+      labels:
+        type: "self-hosted"
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
