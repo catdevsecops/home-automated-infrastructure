@@ -6,7 +6,7 @@ gha-runner-scale-set:
   githubConfigSecret: "github-app-secret"
 
   ## Configuração do Runner
-  minRunners: 0
+  minRunners: 1
   maxRunners: 3
 
   ## Se você for usar Docker dentro dos runners (build de imagens)
@@ -22,10 +22,26 @@ gha-runner-scale-set:
   runnerScaleSetName: "k8s-runner-set"
 
   # Adicionando labels que o GitHub entende para ARM
-  labels:
+  runnerScaleSetLabels:
     - "linux"
     - "arm64"
     - "self-hosted"
+
+  listenerTemplate:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: listener
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
 
   # Garante que o pod do runner use uma ServiceAccount específica
   template:
@@ -33,7 +49,6 @@ gha-runner-scale-set:
       serviceAccountName: "arc-runner-admin-sa"
       containers:
         - name: runner
-          image: ghcr.io/actions/actions-runner:latest
-          command: ["/home/runner/run.sh"]
+          image: ghcr.io/terrateamio/self-hosted-runner:latest
           securityContext:
             privileged: true
