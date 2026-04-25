@@ -1,6 +1,6 @@
 gha-runner-scale-set:
   ## URL do repositório ou organização
-  githubConfigUrl: "https://github.com/catdevsecops"
+  githubConfigUrl: "https://github.com/catdevsecops/home-automated-infrastructure"
 
   ## Nome da Secret gerada pelo seu ExternalSecret
   githubConfigSecret: "github-app-secret"
@@ -13,6 +13,9 @@ gha-runner-scale-set:
   containerMode:
     type: "dind"
 
+  dindArgs:
+    - "--mtu=1300"
+
   ## Configuração do Controller
   controllerServiceAccount:
     name: arc-systems-arc-operator-gha-rs-controller
@@ -20,12 +23,6 @@ gha-runner-scale-set:
 
   ## Nome do Runner Group no GitHub (opcional)
   runnerScaleSetName: "k8s-runner-set"
-
-  # Adicionando labels que o GitHub entende para ARM
-  runnerScaleSetLabels:
-    - "linux"
-    - "arm64"
-    - "self-hosted"
 
   listenerTemplate:
     spec:
@@ -42,13 +39,3 @@ gha-runner-scale-set:
             capabilities:
               drop:
                 - ALL
-
-  # Garante que o pod do runner use uma ServiceAccount específica
-  template:
-    spec:
-      serviceAccountName: "arc-runner-admin-sa"
-      containers:
-        - name: runner
-          image: ghcr.io/terrateamio/self-hosted-runner:latest
-          securityContext:
-            privileged: true
