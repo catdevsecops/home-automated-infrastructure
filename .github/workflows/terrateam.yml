@@ -35,6 +35,8 @@ jobs:
     environment: "${{ github.event.inputs.environment }}"
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Run Terrateam Action
         id: terrateam
         uses: terrateamio/action@v1
@@ -44,3 +46,4 @@ jobs:
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
           VARIABLES_CONTEXT: ${{ toJson(vars) }}
+          GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
