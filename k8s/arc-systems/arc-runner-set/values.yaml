@@ -18,6 +18,7 @@ gha-runner-scale-set:
   runnerScaleSetName: "k8s-runner-set"
   template:
     spec:
+      serviceAccountName: arc-runner-admin-sa
       initContainers:
         - name: init-dind-externals
           image: ghcr.io/actions/actions-runner:latest
