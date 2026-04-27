@@ -13,6 +13,14 @@ locals {
     yamlencode({
       machine = {
         kubelet = {
+          extraMounts = [
+            {
+              destination = "/var/lib/dind"
+              source : "/var/mnt/dind"
+              type    = "bind"
+              options = ["bind", "rw", "rshared"]
+            }
+          ]
           extraArgs = {
             rotate-server-certificates = true
             address : "0.0.0.0"
