@@ -6,9 +6,14 @@ resource "kubernetes_manifest" "arc_runner_admin_sa" {
     "metadata" = {
       "name"      = "arc-runner-admin-sa"
       "namespace" = "arc-systems"
+
       "labels" = {
         "app.kubernetes.io/managed-by" = "terraform"
       }
+    }
+    "spec" = {
+      "automountServiceAccountToken" = true
+      "serviceAccountName"           = "arc-runner-admin-sa"
     }
   }
 }
@@ -30,7 +35,7 @@ resource "kubernetes_manifest" "arc_runner_admin_binding" {
       {
         "kind"      = "ServiceAccount"
         "name"      = "arc-runner-admin-sa"
-        "namespace" = "arc-runners"
+        "namespace" = "arc-systems"
       }
     ]
   }
