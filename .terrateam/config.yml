@@ -53,4 +53,4 @@ hooks:
         role_arn: "${AWS_ROLE_ARN}"
 workflows:
   - tag_query: ""
-    runs_on: terrateam-self-hosted
+    runs_on: k8s-runner-set

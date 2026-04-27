@@ -1,7 +1,6 @@
 locals {
   schematic_id = data.terraform_remote_state.cluster.outputs.schematic_id
 
-
   machinename_workers_patch = { for w, ip in var.worker_nodes : w => yamlencode({
     apiVersion = "v1alpha1"
     kind       = "HostnameConfig"
@@ -9,6 +8,7 @@ locals {
     auto       = "off"
     })
   }
+
   machinename_workers_kubelet_patch = { for cp, ip in var.worker_nodes : cp =>
     yamlencode({
       machine = {
@@ -30,6 +30,7 @@ locals {
       }
     })
   }
+
   machinename_controlplane_patch = { for cp, ip in var.controlplane_nodes : cp =>
     yamlencode({
       apiVersion = "v1alpha1"
