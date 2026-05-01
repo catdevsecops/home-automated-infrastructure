@@ -11,10 +11,6 @@ resource "kubernetes_manifest" "arc_runner_admin_sa" {
         "app.kubernetes.io/managed-by" = "terraform"
       }
     }
-    "spec" = {
-      "automountServiceAccountToken" = true
-      "serviceAccountName"           = "arc-runner-admin-sa"
-    }
   }
 }
 
