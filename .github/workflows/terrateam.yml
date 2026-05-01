@@ -37,13 +37,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Run Terrateam Action
+      - name: run terrateam in image base
         id: terrateam
-        uses: terrateamio/action@v1
-        with:
-          work-token: "${{ github.event.inputs.work-token }}"
-          api-base-url: "${{ github.event.inputs.api-base-url }}"
+        run: /entrypoint.sh "${{ github.event.inputs.work-token }}" "${{ github.event.inputs.api-base-url }}"
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
           VARIABLES_CONTEXT: ${{ toJson(vars) }}
-          GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
