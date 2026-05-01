@@ -57,7 +57,7 @@ gha-runner-scale-set:
               mountPath: /home/runner/externals
       containers:
         - name: runner
-          image: ghcr.io/actions/actions-runner:latest
+          image: ghcr.io/catdevsecops/action:v1
           command: ["/home/runner/run.sh"]
           env:
             - name: DOCKER_HOST
