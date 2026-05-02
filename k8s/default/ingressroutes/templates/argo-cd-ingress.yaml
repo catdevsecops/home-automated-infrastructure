@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`argo.local.cavaleiro.in`)
+  - match: Host(`argo.cavaleiro.in`)
     kind: Rule
     services:
     - name: argo-cd-argocd-server

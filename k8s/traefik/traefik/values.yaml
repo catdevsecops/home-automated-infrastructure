@@ -14,7 +14,7 @@ traefik:
   ingressRoute:
     dashboard:
       enabled: true
-      matchRule: Host(`traefik.local.cavaleiro.in`)
+      matchRule: Host(`traefik.cavaleiro.in`)
       entryPoints:
         - web
   securityContext:
