@@ -1,0 +1,15 @@
+traefik:
+  ingressRoute:
+    dashboard:
+      enabled: true
+      matchRule: Host(`dashboard.traefik.cavaleiro.in`)
+      entryPoints:
+        - web
+  providers:
+    kubernetesGateway:
+      enabled: true
+  gateway:
+    listeners:
+      web:
+        namespacePolicy:
+          from: All
