@@ -5,6 +5,9 @@ traefik:
         secretKeyRef:
           name: cloudflare-api-token
           key: token
+  service:
+    enabled: true
+    type: ClusterIP
   ports:
     web:
       port: 80 # This changes the --entrypoints.web.address=:8000 to :80
@@ -51,6 +54,6 @@ traefik:
     path: /data
   additionalArguments:
     - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
-    - "--certificatesresolvers.cloudflare.acme.email=clayton@cavaleiro.dev"
+    - "--certificatesresolvers.cloudflare.acme.email=clayton@xdevel.com.br"
     - "--certificatesresolvers.cloudflare.acme.storage=/data/acme.json"
     - "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"

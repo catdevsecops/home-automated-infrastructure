@@ -5,6 +5,7 @@ metadata:
 spec:
   entryPoints:
     - web
+    - websecure
   routes:
   - match: Host(`argo.cavaleiro.in`)
     kind: Rule
@@ -12,3 +13,5 @@ spec:
     - name: argo-cd-argocd-server
       namespace: argo
       port: 80 # O Traefik usará o DNS para resolver o ExternalName
+  tls:
+    certResolver: cloudflare
