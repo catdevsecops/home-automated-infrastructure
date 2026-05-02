@@ -1,3 +1,4 @@
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -5,6 +6,22 @@ metadata:
 spec:
   entryPoints:
     - web
+  routes:
+  - match: Host(`argo.cavaleiro.in`)
+    kind: Rule
+    middlewares:
+      - name: redirect-https # Aplica o redirecionamento aqui
+    services:
+    - name: argo-cd-argocd-server
+      namespace: argo
+      port: 80 # O Traefik usará o DNS para resolver o ExternalName
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argo-ingress-default-ssl
+spec:
+  entryPoints:
     - websecure
   routes:
   - match: Host(`argo.cavaleiro.in`)

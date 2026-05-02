@@ -25,7 +25,20 @@ locals {
               source : "/var/mnt/traefik"
               type    = "bind"
               options = ["bind", "rw", "rshared"]
-            }
+            },
+            {
+              destination = "/var/lib/postgres-data"
+              source : "/var/mnt/postgres-data"
+              type    = "bind"
+              options = ["bind", "rw", "rshared"]
+            },
+            {
+              destination = "/var/lib/prometheus-data"
+              source : "/var/mnt/prometheus-data"
+              type    = "bind"
+              options = ["bind", "rw", "rshared"]
+            },
+
           ]
           extraArgs = {
             rotate-server-certificates = true
