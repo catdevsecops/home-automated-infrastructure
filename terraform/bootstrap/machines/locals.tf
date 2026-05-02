@@ -19,6 +19,12 @@ locals {
               source : "/var/mnt/dind"
               type    = "bind"
               options = ["bind", "rw", "rshared"]
+            },
+            {
+              destination = "/var/lib/traefik"
+              source : "/var/mnt/traefik"
+              type    = "bind"
+              options = ["bind", "rw", "rshared"]
             }
           ]
           extraArgs = {
