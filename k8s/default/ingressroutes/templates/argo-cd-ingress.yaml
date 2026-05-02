@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argo-ingress-default
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`argo.local.cavaleiro.in`)
+    kind: Rule
+    services:
+    - name: argo-cd-argocd-server
+      namespace: argo
+      port: 80 # O Traefik usará o DNS para resolver o ExternalName
