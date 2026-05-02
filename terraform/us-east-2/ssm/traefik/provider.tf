@@ -13,7 +13,7 @@ terraform {
 
   backend "s3" {
     bucket       = "catdevsecops-terraform-state"
-    key          = "us-east-2/ssm/cloudflared.tfstate"
+    key          = "us-east-2/ssm/traefik.tfstate"
     region       = "us-east-2"
     use_lockfile = true
     encrypt      = true
