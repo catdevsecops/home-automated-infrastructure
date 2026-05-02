@@ -28,7 +28,8 @@ resource "helm_release" "this" {
         replicas = 1
       },
       server = {
-        replicas = 1
+        replicas  = 1
+        extraArgs = ["--insecure"]
       },
       repoServer = {
         replicas = 1
