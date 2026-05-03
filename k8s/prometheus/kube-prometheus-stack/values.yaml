@@ -1,0 +1,5 @@
+kube-prometheus-stack:
+  prometheus:
+    prometheusSpec:
+      replicas: 1
+      podAntiAffinity: "hard"
