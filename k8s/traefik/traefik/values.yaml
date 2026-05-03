@@ -8,9 +8,6 @@ traefik:
   service:
     enabled: true
     type: ClusterIP
-  metrics:
-    prometheus:
-      enabled: false
   ports:
     web:
       port: 80 # This changes the --entrypoints.web.address=:8000 to :80
@@ -21,6 +18,11 @@ traefik:
       port: 443 # This changes the --entrypoints.websecure.address=:8443 to :443
       hostPort: 443 # This binds the Host Node port 443 to the Container port 443
       exposedPort: 443 # This updates the K8s Service object
+      protocol: TCP
+    metrics:
+      port: 9500
+      exposedPort: 9500
+      hostPort: 9500
       protocol: TCP
   hostNetwork: true
   ingressRoute:
