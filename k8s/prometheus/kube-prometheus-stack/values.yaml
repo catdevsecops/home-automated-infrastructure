@@ -1,5 +1,6 @@
 kube-prometheus-stack:
+  enabled: true
   prometheus:
     prometheusSpec:
       replicas: 1
-      podAntiAffinity: "hard"
+      storageSpec: {}
