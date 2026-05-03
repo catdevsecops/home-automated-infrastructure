@@ -1,0 +1,8 @@
+apiVersion: v2
+version: 1.0.0
+name: kube-prometheus-stack
+
+dependencies:
+  - name: kube-prometheus-stack
+    version: v0.90.1
+    repository: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
