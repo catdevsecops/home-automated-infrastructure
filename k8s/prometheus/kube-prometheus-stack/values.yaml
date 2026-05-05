@@ -43,21 +43,6 @@ kube-prometheus-stack:
       "node-role.kubernetes.io/control-plane": ""
   prometheus:
     prometheusSpec:
-      initContainers:
-        - name: fix-permissions
-          image: busybox
-          # O comando limpa arquivos de trava antigos e ajusta o dono da pasta
-          command:
-            [
-              "sh",
-              "-c",
-              "rm -f /prometheus/queries.active && chown -R 1000:2000 /prometheus && chmod -R 775 /prometheus",
-            ]
-          securityContext:
-            runAsUser: 0 # Precisa ser root para dar chown
-          volumeMounts:
-            - name: prometheus-prometheus-kube-prometheus-prometheus-db
-              mountPath: /prometheus
       replicas: 1
       securityContext:
         fsGroup: 2000
@@ -67,17 +52,7 @@ kube-prometheus-stack:
         containerSecurityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true # O Prometheus escreve apenas no /prometheus (volume)
-      storageSpec:
-        # disableMountSubPath: true
-        volumeClaimTemplate:
-          spec:
-            disableMountSubPath: true
-            volumeName: "prometheus-pv"
-            storageClassName: "local-storage"
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 8Gi
+      storageSpec: {}
       retention: 7d
       ruleSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
