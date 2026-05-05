@@ -61,6 +61,14 @@ locals {
 
   machinename_controlplane_kubelet_patch = { for cp, ip in var.controlplane_nodes : cp =>
     yamlencode({
+      cluster = {
+        controllerManager = { extraArgs = { "bind-address" = "0.0.0.0"
+          }
+        }
+        scheduler = { extraArgs = { "bind-address" = "0.0.0.0"
+          }
+        }
+      }
       machine = {
         certSANs = [
           "10.10.15.9",
@@ -84,6 +92,11 @@ locals {
     })
   }
   general_patch = yamlencode({
+    cluster = {
+      proxy = { extraArgs = { "metrics-bind-address" = "0.0.0.0:10249"
+        }
+      }
+    }
     machine = {
       features = {
         kubePrism = {
