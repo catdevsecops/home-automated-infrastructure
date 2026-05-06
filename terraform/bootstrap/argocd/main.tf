@@ -24,15 +24,54 @@ resource "helm_release" "this" {
       "redis-ha" = {
         enabled = false
       },
+      redis = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
+            enabled   = true
+            namespace = "prometheus"
+          }
+        }
+      },
       controller = {
         replicas = 1
+        metrics = {
+          enabled = true
+          serviceMonitor = {
+            enabled   = true
+            namespace = "prometheus"
+          }
+        }
       },
       server = {
         replicas  = 1
         extraArgs = ["--insecure"]
+        metrics = {
+          enabled = true
+          serviceMonitor = {
+            enabled   = true
+            namespace = "prometheus"
+          }
+        }
       },
       repoServer = {
         replicas = 1
+        metrics = {
+          enabled = true
+          serviceMonitor = {
+            enabled   = true
+            namespace = "prometheus"
+          }
+        }
+      },
+      notifications = {
+        metrics = {
+          enabled = true
+          serviceMonitor = {
+            enabled   = true
+            namespace = "prometheus"
+          }
+        }
       },
       applicationSet = {
         replicas = 1
