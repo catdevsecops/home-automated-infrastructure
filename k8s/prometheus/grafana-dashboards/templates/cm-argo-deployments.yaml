@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-deployment-dashboard
+  labels:
+    grafana_dashboard: "1"
+binaryData:
+  argocd-dashboard.json: {{ .Files.Get "dashboards/argo-deployments.json" | b64enc }}
