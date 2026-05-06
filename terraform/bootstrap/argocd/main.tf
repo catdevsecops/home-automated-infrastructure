@@ -7,7 +7,7 @@ resource "helm_release" "this" {
   create_namespace = true
 
 
-  values = [
+  values = sensitive([
     yamlencode({
       global = {
         tolerations = [
@@ -85,7 +85,7 @@ resource "helm_release" "this" {
         }
       }
     })
-  ]
+  ])
 }
 
 resource "aws_ssm_parameter" "argocd_private_key" {
