@@ -46,6 +46,9 @@ when_modified:
   autoplan_draft_pr: true
   autoapply: false
 hooks:
+  plan:
+    post:
+      - type: drift_create_issue
   all:
     pre:
       - type: oidc
@@ -54,3 +57,9 @@ hooks:
 workflows:
   - tag_query: ""
     runs_on: k8s-runner-set
+drift:
+  enabled: true
+  schedules:
+    default:
+      tag_query: "dir:aws"
+      schedule: daily
