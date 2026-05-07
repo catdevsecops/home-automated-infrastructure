@@ -61,5 +61,5 @@ drift:
   enabled: true
   schedules:
     default:
-      tag_query: "dir:aws"
-      schedule: daily
+      tag_query: "aws"
+      schedule: hourly

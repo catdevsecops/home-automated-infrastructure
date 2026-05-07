@@ -35,6 +35,12 @@ resource "kubernetes_manifest" "argocd_applicationset" {
             server    = "https://kubernetes.default.svc"
             namespace = "{{path[1]}}"
           }
+          ignoreDifferences = [
+            {
+              group = "discovery.k8s.io"
+              kind  = "EndpointSlice"
+            }
+          ]
           syncPolicy = {
             automated = {
               prune    = true

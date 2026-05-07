@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-external-svc
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: https
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: unifi-external-slice-1
+  labels:
+    kubernetes.io/service-name: unifi-external-svc # Vinculação obrigatória
+addressType: IPv4
+ports:
+  - name: https
+    protocol: TCP
+    port: 443
+endpoints:
+  - addresses:
+      - "10.10.0.1" # Seu IP fixo
+    conditions:
+      ready: true # Define que o endpoint está pronto para receber tráfego
+

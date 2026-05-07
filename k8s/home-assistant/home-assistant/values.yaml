@@ -1,5 +1,7 @@
 home-assistant:
   replicaCount: 1
+  service:
+    port: 8123
   controller:
     type: StatefulSet
   persistence:
@@ -23,3 +25,32 @@ home-assistant:
     scrapeInterval: 30s
     labels:
       release: prometheus
+  configuration:
+    enabled: true
+    forceInit: true
+    trusted_proxies:
+      - 10.0.0.0/8
+      - 127.0.0.0/8
+      - 10.100.0.0/16
+      - 10.10.0.0/16
+      - 10.244.0.0/24
+      - 10.244.1.0/24
+      - 10.244.2.0/24
+      - 10.244.3.0/24
+  ingress:
+    enabled: true
+    ingressClass: traefik-traefik
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      traefik.ingress.kubernetes.io/router.tls.certresolver: "cloudflare"
+    hosts:
+      - host: ha.cavaleiro.in
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: ha.cavaleiro.in
+        hosts:
+          - ha.cavaleiro.in
