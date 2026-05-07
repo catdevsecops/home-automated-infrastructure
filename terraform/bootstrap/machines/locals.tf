@@ -38,7 +38,12 @@ locals {
               type    = "bind"
               options = ["bind", "rw", "rshared"]
             },
-
+            {
+              destination = "/var/lib/home-assistant-data"
+              source : "/var/mnt/home-assistant-data"
+              type    = "bind"
+              options = ["bind", "rw", "rshared"]
+            },
           ]
           extraArgs = {
             rotate-server-certificates = true
