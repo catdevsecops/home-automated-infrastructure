@@ -1,0 +1,25 @@
+home-assistant:
+  replicaCount: 1
+  controller:
+    type: StatefulSet
+  persistence:
+    enabled: true
+    storageClass: "local-storage"
+    accessMode: ReadWriteOnce
+    size: 2Gi
+  additionalPorts:
+    - name: dlna
+      containerPort: 5555
+      protocol: TCP
+  additionalServices:
+    - name: dlna
+      port: 5555
+      targetPort: dlna
+      type: ClusterIP
+      protocol: TCP
+  serviceMonitor:
+    enabled: true
+    namespace: prometheus
+    scrapeInterval: 30s
+    labels:
+      release: prometheus
