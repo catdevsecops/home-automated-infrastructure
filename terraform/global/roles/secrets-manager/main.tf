@@ -8,7 +8,7 @@ resource "aws_iam_access_key" "k8s_user_key" {
 
 resource "aws_iam_user_policy_attachment" "user_ssm_attach" {
   user       = aws_iam_user.k8s_user.name
-  policy_arn = aws_iam_policy.ssm_read_policy.arn # Aquela política do passo anterior
+  policy_arn = aws_iam_policy.ssm_read_policy.arn
 }
 
 resource "aws_iam_policy" "ssm_read_policy" {
