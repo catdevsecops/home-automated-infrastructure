@@ -28,7 +28,7 @@ automerge:
   delete_branch: true
 checkout_strategy: merge
 cost_estimation:
-  enabled: false
+  enabled: true
   provider: infracost
   currency: BRL
 default_tf_version: 1.14.8

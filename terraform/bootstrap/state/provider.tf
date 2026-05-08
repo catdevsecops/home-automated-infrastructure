@@ -10,4 +10,11 @@ terraform {
 
 provider "aws" {
   region = "us-east-2"
+  default_tags {
+    tags = {
+      Environment = "Production"
+      ManagedBy   = "terraform"
+      Project     = "home-automated-infrastructure"
+    }
+  }
 }
