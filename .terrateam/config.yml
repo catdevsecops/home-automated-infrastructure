@@ -33,6 +33,8 @@ cost_estimation:
   currency: BRL
 default_tf_version: 1.14.8
 dirs:
+  "terraform/**/*":
+    tags: [aws]
   terraform:
     tags: [aws]
     when_modified:
