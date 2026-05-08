@@ -26,4 +26,11 @@ endpoints:
       - "10.10.0.1" # Seu IP fixo
     conditions:
       ready: true # Define que o endpoint está pronto para receber tráfego
-
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: skip-verify
+  namespace: o-mesmo-do-ingressroute # Namespace deve ser igual
+spec:
+  insecureSkipVerify: true
