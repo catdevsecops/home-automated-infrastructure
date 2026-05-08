@@ -7,12 +7,12 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`unify.cavaleiro.in`)
+  - match: Host(`unifi.cavaleiro.in`)
     kind: Rule
     middlewares:
       - name: redirect-https # Aplica o redirecionamento aqui
     services:
-    - name: unify-external-svc
+    - name: unifi-external-svc
       port: 443 # O Traefik usará o DNS para resolver o ExternalName
       scheme: https
       serversTransport: skip-verify # Referência ao objeto acima
@@ -25,10 +25,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`unify.cavaleiro.in`)
+  - match: Host(`unifi.cavaleiro.in`)
     kind: Rule
     services:
-    - name:  unify-external-svc
+    - name:  unifi-external-svc
       port: 443 # O Traefik usará o DNS para resolver o ExternalName
       scheme: https
       serversTransport: skip-verify # Referência ao objeto acima
