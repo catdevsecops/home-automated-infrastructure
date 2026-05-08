@@ -5,10 +5,6 @@ resource "aws_ssm_parameter" "k8s_app_secret" {
 
   value = "secure"
 
-  tags = {
-    Environment = "production"
-    ManagedBy   = "terraform"
-  }
 
   lifecycle {
     ignore_changes = [

@@ -40,9 +40,4 @@ resource "aws_iam_policy" "ssm_read_policy" {
       }
     ]
   })
-
-  tags = {
-    Environment = "production"
-    Project     = "k8s-ssm-operator"
-  }
 }
