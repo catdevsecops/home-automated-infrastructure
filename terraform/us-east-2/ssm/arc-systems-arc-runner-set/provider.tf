@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.41.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "3.1.0"
+    }
+  }
+  required_version = ">= 1.14"
+
+  backend "s3" {
+    bucket       = "catdevsecops-terraform-state"
+    key          = "us-east-2/ssm/arc-systems-arc-runner-set.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
+  }
+
+}
+
+provider "aws" {
+  region = "us-east-2"
+  default_tags {
+    tags = {
+      Environment = "Production"
+      ManagedBy   = "terraform"
+      Project     = "home-automated-infrastructure"
+    }
+  }
+}
+
+provider "kubernetes" {
+}
