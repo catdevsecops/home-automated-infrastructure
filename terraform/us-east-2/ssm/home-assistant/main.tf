@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "home_assistant_external_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "home-assistant-token"
-      namespace = "prometheus"
+      namespace = "home-assistant"
     }
     spec = {
       refreshInterval = "12h"
