@@ -25,6 +25,9 @@ home-assistant:
     scrapeInterval: 30s
     labels:
       release: prometheus
+    bearerToken:
+      secretName: "home-assistant-token"
+      secretKey: "token"
   configuration:
     enabled: true
     forceInit: true
