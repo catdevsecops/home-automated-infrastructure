@@ -64,4 +64,4 @@ drift:
   schedules:
     default:
       tag_query: "aws"
-      schedule: hourly
+      schedule: daily
