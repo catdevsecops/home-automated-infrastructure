@@ -40,6 +40,37 @@ home-assistant:
       - 10.244.1.0/24
       - 10.244.2.0/24
       - 10.244.3.0/24
+    templateConfig: |-
+      # Loads default set of integrations. Do not remove.
+      default_config:
+
+      {{- if .Values.ingress.enabled }}
+      http:
+        use_x_forwarded_for: true
+        trusted_proxies:
+          {{- range .Values.configuration.trusted_proxies }}
+          - {{ . }}
+          {{- end }}
+      {{- end}}
+      # Load frontend themes from the themes folder
+      frontend:
+        themes: !include_dir_merge_named themes
+
+      automation: !include automations.yaml
+      script: !include scripts.yaml
+      scene: !include scenes.yaml
+      rest:
+        - authentication: digest
+          scan_interval: 60
+          resource: http://solarz-wrapper/api/v1/data
+          sensor:
+            - name: "SolarZ Solar info"
+              json_attributes_path: "$[0]"
+              value_template: "OK"
+              json_attributes:
+                - "id"
+                - "name"
+                - "value"
   ingress:
     enabled: true
     ingressClass: traefik-traefik
