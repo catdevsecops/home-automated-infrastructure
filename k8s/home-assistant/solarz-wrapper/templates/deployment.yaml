@@ -16,7 +16,7 @@ spec:
       containers:
       - name: solarz-wrapper
         image: ghcr.io/catdevsecops/solarz-homeassistant-api-wrapper:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 8080
