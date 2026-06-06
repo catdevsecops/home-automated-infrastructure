@@ -61,13 +61,7 @@ home-assistant:
       automation: !include automations.yaml
       script: !include scripts.yaml
       scene: !include scenes.yaml
-      sensor:
-        - platform: rest
-          name: solar_energy_input
-          scan_interval: 86400
-          resource: http://solarz-wrapper/api/v1/data
-          value_template: "{{ value_json[0].value }}"
-          unit_of_measurement: "kWh"
+      sensor: !include sensors.yaml
   ingress:
     enabled: true
     ingressClass: traefik-traefik
