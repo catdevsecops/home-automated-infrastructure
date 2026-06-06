@@ -1,4 +1,6 @@
 home-assistant:
+  image:
+    tag: 2026.6.1
   replicaCount: 1
   service:
     port: 8123
@@ -59,18 +61,13 @@ home-assistant:
       automation: !include automations.yaml
       script: !include scripts.yaml
       scene: !include scenes.yaml
-      rest:
-        - authentication: digest
-          scan_interval: 60
+      sensor:
+        - platform: rest
+          name: solar_energy_input
+          scan_interval: 86400
           resource: http://solarz-wrapper/api/v1/data
-          sensor:
-            - name: "SolarZ Solar info"
-              json_attributes_path: "$[0]"
-              value_template: "OK"
-              json_attributes:
-                - "id"
-                - "name"
-                - "value"
+          value_template: "{{ value_json[0].value }}"
+          unit_of_measurement: "kWh"
   ingress:
     enabled: true
     ingressClass: traefik-traefik
