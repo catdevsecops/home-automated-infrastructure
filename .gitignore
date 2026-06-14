@@ -6,3 +6,7 @@
 # Pre-commit
 .pre-commit-framework/
 .secrets.baseline
+
+# GitHub Actions
+pre-commit-output.txt
+pre-commit-summary.txt

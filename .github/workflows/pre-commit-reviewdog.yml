@@ -1,0 +1,151 @@
+name: Pre-Commit with Reviewdog
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+    paths:
+      - "terraform/**/*.tf"
+      - "k8s/**/*.yaml"
+      - "k8s/**/*.yml"
+      - ".pre-commit-config.yaml"
+      - ".tflint.hcl"
+      - ".github/workflows/**"
+
+concurrency:
+  group: pre-commit-reviewdog-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit-reviewdog:
+    name: Pre-Commit Checks with Reviewdog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    env:
+      TFLINT_VERSION: "0.63.1"
+      TRIVY_VERSION: "0.71.0"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.8"
+
+      - name: Install TFLint
+        run: |
+          wget https://github.com/terraform-linters/tflint/releases/download/v${{ env.TFLINT_VERSION }}/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          sudo mv tflint /usr/local/bin/
+          rm tflint_linux_amd64.zip
+
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v${{ env.TRIVY_VERSION }}/trivy_${{ env.TRIVY_VERSION }}_Linux-64bit.tar.gz
+          tar zxvf trivy_${{ env.TRIVY_VERSION }}_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+          rm trivy_${{ env.TRIVY_VERSION }}_Linux-64bit.tar.gz
+
+      - name: Install Pre-Commit
+        run: pip install pre-commit
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v47
+
+      - name: Run Pre-Commit Hooks
+        id: pre-commit-run
+        continue-on-error: true
+        run: |
+          # Se houver arquivos modificados, rodar pre-commit neles
+          if [ -n "${{ steps.changed-files.outputs.all_changed_files }}" ]; then
+            echo "Running pre-commit on changed files..."
+            pre-commit run --files ${{ steps.changed-files.outputs.all_changed_files }} 2>&1 | tee pre-commit-output.txt || true
+          else
+            echo "No relevant files changed, skipping pre-commit..."
+            echo "" > pre-commit-output.txt
+          fi
+
+      - name: Parse Pre-Commit Output
+        id: parse-output
+        if: always()
+        run: |
+          if grep -i "failed\|error" pre-commit-output.txt > /dev/null 2>&1; then
+            echo "has_errors=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_errors=false" >> $GITHUB_OUTPUT
+          fi
+          # Salvar output para usar em comentários
+          cat pre-commit-output.txt > pre-commit-summary.txt
+
+      - name: Comment PR with Results
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('pre-commit-summary.txt', 'utf8');
+            const hasErrors = '${{ steps.parse-output.outputs.has_errors }}' === 'true';
+
+            const statusEmoji = hasErrors ? '❌' : '✅';
+            const statusText = hasErrors ? 'Failed' : 'Passed';
+
+            let comment = `## ${statusEmoji} Pre-Commit Validation ${statusText}\n\n`;
+
+            if (hasErrors) {
+              comment += `### Issues Found\n\n`;
+              comment += '```\n' + output.substring(0, 3000) + '\n```\n\n';
+              comment += `### How to Fix\n`;
+              comment += `1. Run locally: \`pre-commit run --all-files\`\n`;
+              comment += `2. Commit the fixes: \`git add . && git commit -m "chore(pre-commit): auto fixes"\`\n`;
+              comment += `3. Push: \`git push\`\n\n`;
+              comment += `See [PRE-COMMIT.md](https://github.com/${{ github.repository }}/blob/main/PRE-COMMIT.md) for more info.`;
+            } else {
+              comment += `All checks passed! ✨`;
+            }
+
+            // Remover comentário anterior se existir
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComments = comments.filter(comment =>
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body.includes('Pre-Commit Validation')
+            );
+
+            for (const botComment of botComments) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
+
+            // Criar novo comentário
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment,
+            });
+
+      - name: Set Status Check
+        if: steps.parse-output.outputs.has_errors == 'true'
+        run: exit 1
