@@ -49,4 +49,3 @@ data "talos_machine_configuration" "worker" {
     local.machinename_workers_kubelet_patch[each.key]
   ]
 }
-

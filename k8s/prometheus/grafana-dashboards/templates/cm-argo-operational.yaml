@@ -6,4 +6,3 @@ metadata:
     grafana_dashboard: "1"
 binaryData:
   argocd-dashboard.json: {{ .Files.Get "dashboards/argo-operational.json" | b64enc }}
-
