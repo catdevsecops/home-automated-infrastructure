@@ -1,0 +1,147 @@
+repos:
+  # VALIDAÇÃO GERAL - PRE-COMMIT HOOKS PADRÃO
+  # Validações básicas de arquivos
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: end-of-file-fixer
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: check-yaml
+        args: [--unsafe]
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: check-json
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: check-merge-conflict
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+      - id: check-case-conflict
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*|
+            node_modules/.*
+          )$
+
+  # TERRAFORM - antonbabenko/pre-commit-terraform
+  # Validação, formatação e lint de Terraform
+  # NOTA: Apenas roda em arquivos .tf, automaticamente ignora .terraform/
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.88.4
+    hooks:
+      # Formatação automática de Terraform
+      - id: terraform_fmt
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*
+          )$
+
+      # Validação de sintaxe Terraform
+      - id: terraform_validate
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            \.terraform/.*|
+            \.git/.*
+          )$
+
+      # Lint de Terraform (valida boas práticas)
+      - id: terraform_tflint
+        stages: [commit]
+        exclude: |
+          (?x)^(
+            k8s/.*|
+            \.terraform/.*|
+            \.git/.*
+          )$
+
+  # SEGURANÇA - Trivy para scanning de vulnerabilidades
+  # Detecta vulnerabilidades em Infrastructure as Code
+  - repo: local
+    hooks:
+      - id: trivy-terraform
+        name: trivy - Terraform security scan
+        entry: trivy config terraform/
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [commit]
+      - id: trivy-kubernetes
+        name: trivy - Kubernetes security scan
+        entry: trivy config k8s/
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [commit]
+
+  # YAML LINTER - para validar manifests Kubernetes
+  # NOTA: Apenas valida arquivos em k8s/, não em terraform/
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: v1.35.1
+  #   hooks:
+  #     - id: yamllint
+  #       name: yamllint - Lint YAML
+  #       description: Verifica formatação YAML
+  #       files: ^k8s/.*\.ya?ml$
+  #       args:
+  #         - --config-file=.yamllint.yaml
+  #       stages: [commit]
+
+default_language_version:
+  python: python3
+
+default_stages: [commit]
+
+# Configuração para CI/CD
+ci:
+  autofix_commit_msg: |
+    chore(pre-commit): auto fixes by pre-commit hooks
+
+    for more information, see https://pre-commit.com
+  autofix_prs: true
+  autoupdate_branch: ""
+  autoupdate_commit_msg: "chore(pre-commit): autoupdate hooks"
+  autoupdate_schedule: weekly
+  submodules: false
