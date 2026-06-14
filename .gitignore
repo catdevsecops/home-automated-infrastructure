@@ -2,3 +2,7 @@
 *.tfstate.*
 !terraform/bootstrap/state/*.tfstate
 .terraform/
+
+# Pre-commit
+.pre-commit-framework/
+.secrets.baseline

@@ -495,6 +495,24 @@ spec:
 
 ---
 
+## ✅ Setup Inicial
+
+Antes de começar a trabalhar no projeto, execute:
+
+```bash
+# 1. Instalar pre-commit
+pip3 install pre-commit
+
+# 2. Instalar os hooks no repositório
+pre-commit install
+pre-commit install --hook-type commit-msg
+
+# 3. Verificar que está funcionando
+pre-commit run --all-files
+```
+
+Consulte `PRE-COMMIT.md` para detalhes completos sobre as validações automatizadas.
+
 ## 📝 Fluxo de Desenvolvimento
 
 ### Bootstrap Inicial (Primeira Execução)
@@ -723,15 +741,25 @@ Mesmo fluxo acima - Terrateam gerencia todas as mudanças.
 
 ### Terraform - Antes de fazer PR
 
-- [ ] `terraform fmt` passou (código formatado)
-- [ ] `terraform validate` passou (sintaxe correta)
+**Pre-commit automatiza muitas dessas verificações!**
+
+- [ ] `pre-commit run --all-files` passou
+  - `terraform_fmt` ✅ (código formatado automaticamente)
+  - `terraform_validate` ✅ (sintaxe correta automaticamente)
+  - `terraform_tflint` ✅ (estilo e boas práticas)
+  - `trivy` ✅ (segurança e vulnerabilidades)
+  - `detect-secrets` ✅ (sem secrets commitados)
 - [ ] `terraform plan -out=tfplan` revisado manualmente
 - [ ] `terraform show tfplan` mostra apenas mudanças esperadas
 - [ ] Nenhum secret em variables, outputs ou `.tfvars`
+  - Use AWS SSM Parameter Store + External Secrets
 - [ ] State backend configurado corretamente
 - [ ] Versões de providers fixas (usar `~>` ou `=`)
 - [ ] Comentários explicam lógica complexa
 - [ ] Outputs sensíveis marcados com `sensitive = true`
+- [ ] Mensagem de commit segue Conventional Commits
+  - Formato: `type(scope): message`
+  - Exemplo: `feat(terraform/bootstrap): add talos configuration`
 
 ### Kubernetes/ArgoCD (Helm) - Antes de fazer PR
 
@@ -862,6 +890,7 @@ aws s3api put-bucket-versioning \
 
 - **`README.md`** - Visão geral do projeto, estrutura de pastas
 - **`terraform/README.md`** - Detalhes de Terraform, ordem de bootstrap
+- **`PRE-COMMIT.md`** - Validações automatizadas e setup
 - **`CLAUDE.md`** - Este arquivo, guia de colaboração
 
 ### Cluster e Hardware
