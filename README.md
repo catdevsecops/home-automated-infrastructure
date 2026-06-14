@@ -2,6 +2,8 @@
 
 Uma infraestrutura de código aberto que automatiza completamente o controle de uma casa residencial usando GitOps, Kubernetes em edge computing e home automation.
 
+![datacenter](./datacenter.jpg)
+
 ## 📁 Estrutura de Pastas
 
 ```
