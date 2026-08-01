@@ -61,7 +61,6 @@ home-assistant:
       automation: !include automations.yaml
       script: !include scripts.yaml
       scene: !include scenes.yaml
-      sensor: !include sensors.yaml
   ingress:
     enabled: true
     ingressClass: traefik-traefik
