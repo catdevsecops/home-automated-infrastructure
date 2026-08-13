@@ -6,6 +6,8 @@ home-assistant:
     port: 8123
   controller:
     type: StatefulSet
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
   persistence:
     enabled: true
     storageClass: "local-storage"
