@@ -1,6 +1,6 @@
 home-assistant:
   image:
-    tag: 2026.7.4
+    tag: 2026.9.3
   replicaCount: 1
   service:
     port: 8123
@@ -63,6 +63,11 @@ home-assistant:
       automation: !include automations.yaml
       script: !include scripts.yaml
       scene: !include scenes.yaml
+      sensor: !include sensors.yaml
+      homeassistant:
+        customize: !include customize.yaml
+      prometheus:
+
   ingress:
     enabled: true
     ingressClass: traefik-traefik
