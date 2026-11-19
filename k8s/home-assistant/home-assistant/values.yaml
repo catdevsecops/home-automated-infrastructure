@@ -1,6 +1,6 @@
 home-assistant:
   image:
-    tag: 2026.9.3
+    tag: 2026.11.0
   replicaCount: 1
   service:
     port: 8123
